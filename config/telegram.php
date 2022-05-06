@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'token' => env('telegram')
+    'token' => env('TELEGRAM')
 ];
