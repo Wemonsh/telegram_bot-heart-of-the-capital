@@ -15,8 +15,8 @@ class BotManController extends Controller
         $config = [
             // Your driver-specific configuration
             "telegram" => [
-                //"token" => "5375693593:AAFG-XEAJXm3Uqy0Y0DI_Gau3LG92rbkKSY"
-                "token" => config('telegram.token')
+                "token" => "1209950271:AAE2Q1svLFkHmhUYFDiJh7O3DHIfNOAEC-c"
+                //"token" => config('telegram.token')
             ]
         ];
 
