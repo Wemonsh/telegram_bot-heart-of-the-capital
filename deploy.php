@@ -14,8 +14,9 @@ add('writable_dirs', []);
 // Hosts
 
 host('188.225.56.139')
-    ->set('remote_user', 'deployer')
-    ->set('deploy_path', '~/application');
+    ->set('remote_user', 'root')
+    ->set('deploy_path', '/var/www/telegram-bot.wemonsh.ru')
+    ->getIdentityFile('~/.ssh/id_rsa');
 
 // Tasks
 
