@@ -77,7 +77,7 @@ class QuestionnaireShowScreen extends Screen
                     $html = '';
                     if ($questionnaire->images !== null) {
                         foreach ($questionnaire->images as $image){
-                            $html.= "<img width='200px' src='" . $image . "'>";
+                            $html.= "<img width='200px' src='/storage/" . $image . "'>";
                         }
                         return $html;
                     }
