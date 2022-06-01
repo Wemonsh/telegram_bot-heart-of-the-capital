@@ -7,6 +7,7 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 use BotMan\BotMan\Messages\Outgoing\Question;
+use Illuminate\Support\Facades\Storage;
 
 class RegistrationConversation extends Conversation
 {
@@ -123,7 +124,11 @@ class RegistrationConversation extends Conversation
 
         $this->askForImages(__('botman.register.document.question'), function ($images) {
             foreach ($images as $image) {
-                $this->images[] = $image->getUrl();
+                $url = $image->getUrl();
+                $contents = file_get_contents($url);
+                $name = uniqid() . '_' . substr($url, strrpos($url, '/') + 1);
+                Storage::disk('public')->put($name, $contents);
+                $this->images[] = $name;
             }
             $this->askConfirm();
         }, function(Answer $answer) {
