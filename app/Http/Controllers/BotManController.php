@@ -30,6 +30,10 @@ class BotManController extends Controller
             $bot->startConversation(new RegistrationConversation);
         });
 
+        $botman->hears('/start', function (BotMan $bot) {
+            $bot->startConversation(new RegistrationConversation);
+        });
+
         // Give the bot something to listen for.
         $botman->hears('hello', function (BotMan $bot) {
             $bot->reply('Hello yourself.');

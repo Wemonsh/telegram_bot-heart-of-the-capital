@@ -146,7 +146,7 @@ class RegistrationConversation extends Conversation
         $text = '😊 ' . $this->fullName . PHP_EOL .
             '☎️ ' . $this->mobilePhone . PHP_EOL .
             '📧 ' . $this->email . PHP_EOL .
-            '🏠 ' . $this->campus . PHP_EOL .
+            '🏢 ' . $this->campus . PHP_EOL .
             '🏠  ' . $this->apartment . PHP_EOL .
             '🚘 ' . $this->parking;
         $question = Question::create($text)
