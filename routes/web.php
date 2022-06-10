@@ -17,7 +17,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test', function () {
+Route::get('redirect', function (\Illuminate\Http\Request $request) {
+    if ($request->type = 1) {
+
+        $q = \App\Models\Questionnaire::where('id', $request->id)->first();
+
+        if ($q !== null && $q->status === 1) {
+            $q->status = 2;
+            $q->save();
+            return redirect('https://t.me/+wu2etczoVqo1MDNi');
+
+        }
+    } elseif($request->type = 2) {
+        $q = \App\Models\Questionnaire::where('id', $request->id)->first();
+
+        if ($q !== null && $q->status === 1) {
+            $q->status = 2;
+            $q->save();
+            return redirect('https://t.me/+4rRbTAIvQzZjZGUy');
+
+        }
+    }
+    abort(403, 'Вы уже ранее совершали переход по ссылке');
 });
 
 Route::match(['get', 'post'],'/telegram', [App\Http\Controllers\BotManController::class, '__invoke']);

@@ -55,11 +55,26 @@ class QuestionnaireShowScreen extends Screen
 
     public function send(Questionnaire $questionnaire)
     {
-        Alert::info('Приглашение отправлено.');
+        if (in_array($questionnaire->getAttribute('campus'), ['34к2, Здание 1', '34к2, Здание 2', '34к2, Здание 3'])) {
+            $botman = resolve('botman');
+            $botman->say(url('/redirect' . '?type=1&id=' . $questionnaire->id), $questionnaire->getAttribute('telegram_id'), \BotMan\Drivers\Telegram\TelegramDriver::class);
 
-        $botman = resolve('botman');
-        $botman->say('Message', '168048474', \BotMan\Drivers\Telegram\TelegramDriver::class);
+            $questionnaire->status = 1;
+            $questionnaire->save();
 
+            Alert::info('Приглашение отправлено');
+        } elseif (in_array($questionnaire->getAttribute('campus'), ['34к1, Здание 4', '34к1, Здание 5(АП)'])) {
+            $botman = resolve('botman');
+            $botman->say(url('/redirect' . '?type=2&id=' . $questionnaire->id), $questionnaire->getAttribute('telegram_id'), \BotMan\Drivers\Telegram\TelegramDriver::class);
+
+
+            $questionnaire->status = 1;
+            $questionnaire->save();
+
+            Alert::info('Приглашение отправлено');
+        } else {
+            Alert::error('Ошибка некоректный кампус');
+        }
         return redirect()->route('platform.questionnaire.list');
     }
 
@@ -88,6 +103,20 @@ class QuestionnaireShowScreen extends Screen
                         return $html;
                     }
                     return 'Нет вложений';
+                }),
+                Sight::make('status', 'Статус')->render(function ($questionnaire){
+                    switch ($questionnaire->status) {
+                        case 0:
+                        return 'Заявка создана';
+                            break;
+                        case 1:
+                        return 'Отправлено приглашение';
+                            break;
+                        case 2:
+                        return 'Приглашен';
+                            break;
+                    }
+                    return 'Ошибка';
                 }),
             ]),
         ];
