@@ -82,11 +82,11 @@ class RegistrationConversation extends Conversation
             ->fallback('Unable to create a new database')
             ->callbackId('create_database')
             ->addButtons([
-                Button::create(__('botman.register.campus.data.q1'))->value('Корпус 1 - АП'),
-                Button::create(__('botman.register.campus.data.q2'))->value('Корпус 1 - ЖД4'),
-                Button::create(__('botman.register.campus.data.q3'))->value('Корпус 2 - ЖД1'),
-                Button::create(__('botman.register.campus.data.q4'))->value('Корпус 2 - ЖД2'),
-                Button::create(__('botman.register.campus.data.q5'))->value('Корпус 2 - ЖД3'),
+                Button::create(__('botman.register.campus.data.q1'))->value(__('botman.register.campus.data.q1')),
+                Button::create(__('botman.register.campus.data.q2'))->value(__('botman.register.campus.data.q2')),
+                Button::create(__('botman.register.campus.data.q3'))->value(__('botman.register.campus.data.q3')),
+                Button::create(__('botman.register.campus.data.q4'))->value(__('botman.register.campus.data.q4')),
+                Button::create(__('botman.register.campus.data.q5'))->value(__('botman.register.campus.data.q5')),
             ]);
 
         $this->ask($question, function (Answer $answer) {

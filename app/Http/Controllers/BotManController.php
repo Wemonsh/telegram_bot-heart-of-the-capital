@@ -36,7 +36,7 @@ class BotManController extends Controller
 
         // Give the bot something to listen for.
         $botman->hears('hello', function (BotMan $bot) {
-            $bot->reply('Hello yourself.');
+            $bot->say('Hello yourself.', '168048474');
         });
 
         // Start listening
