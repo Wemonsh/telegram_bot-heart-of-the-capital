@@ -19,7 +19,6 @@ Route::get('/', function () {
 
 Route::get('redirect', function (\Illuminate\Http\Request $request) {
     if ($request->type = 1) {
-
         $q = \App\Models\Questionnaire::where('id', $request->id)->first();
 
         if ($q !== null && $q->status === 1) {

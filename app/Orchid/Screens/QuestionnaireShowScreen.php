@@ -57,7 +57,10 @@ class QuestionnaireShowScreen extends Screen
     {
         if (in_array($questionnaire->getAttribute('campus'), ['34к2, Здание 1', '34к2, Здание 2', '34к2, Здание 3'])) {
             $botman = resolve('botman');
-            $botman->say(url('/redirect' . '?type=1&id=' . $questionnaire->id), $questionnaire->getAttribute('telegram_id'), \BotMan\Drivers\Telegram\TelegramDriver::class);
+            $botman->say('Ваша уникальная ссылка приглашение', $questionnaire->getAttribute('telegram_id'),
+                \BotMan\Drivers\Telegram\TelegramDriver::class, ['reply_markup' => json_encode(['inline_keyboard' => [
+                    [['text' => 'Присоединиться', 'url' => url('/redirect' . '?type=1&id=' . $questionnaire->id)]]
+                ], 'one_time_keyboard' => true, 'resize_keyboard' => true])]);
 
             $questionnaire->status = 1;
             $questionnaire->save();
@@ -65,8 +68,10 @@ class QuestionnaireShowScreen extends Screen
             Alert::info('Приглашение отправлено');
         } elseif (in_array($questionnaire->getAttribute('campus'), ['34к1, Здание 4', '34к1, Здание 5(АП)'])) {
             $botman = resolve('botman');
-            $botman->say(url('/redirect' . '?type=2&id=' . $questionnaire->id), $questionnaire->getAttribute('telegram_id'), \BotMan\Drivers\Telegram\TelegramDriver::class);
-
+            $botman->say('Ваша уникальная ссылка приглашение', $questionnaire->getAttribute('telegram_id'),
+                \BotMan\Drivers\Telegram\TelegramDriver::class, ['reply_markup' => json_encode(['inline_keyboard' => [
+                    [['text' => 'Присоединиться', 'url' => url('/redirect' . '?type=2&id=' . $questionnaire->id)]]
+                ], 'one_time_keyboard' => true, 'resize_keyboard' => true])]);
 
             $questionnaire->status = 1;
             $questionnaire->save();
