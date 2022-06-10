@@ -57,20 +57,8 @@ class QuestionnaireShowScreen extends Screen
     {
         Alert::info('Приглашение отправлено.');
 
-        $config = [
-            // Your driver-specific configuration
-            "telegram" => [
-                "token" => config('services.telegram.token')
-            ]
-        ];
-
-        // Load the driver(s) you want to use
-        DriverManager::loadDriver(\BotMan\Drivers\Telegram\TelegramDriver::class);
-
-        // Create an instance
-        $botman = BotManFactory::create($config, new LaravelCache());
-
-        $botman->say('123 Приглашение', $questionnaire->getAttribute('telegram_id'));
+        $botman = resolve('botman');
+        $botman->say('Message', '168048474', \BotMan\Drivers\Telegram\TelegramDriver::class);
 
         return redirect()->route('platform.questionnaire.list');
     }
