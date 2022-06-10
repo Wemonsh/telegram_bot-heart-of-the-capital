@@ -3,6 +3,9 @@
 namespace App\Orchid\Screens;
 
 use App\Models\Questionnaire;
+use BotMan\BotMan\BotManFactory;
+use BotMan\BotMan\Cache\LaravelCache;
+use BotMan\BotMan\Drivers\DriverManager;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Screen\Sight;
@@ -53,6 +56,21 @@ class QuestionnaireShowScreen extends Screen
     public function send(Questionnaire $questionnaire)
     {
         Alert::info('Приглашение отправлено.');
+
+        $config = [
+            // Your driver-specific configuration
+            "telegram" => [
+                "token" => config('services.telegram.token')
+            ]
+        ];
+
+        // Load the driver(s) you want to use
+        DriverManager::loadDriver(\BotMan\Drivers\Telegram\TelegramDriver::class);
+
+        // Create an instance
+        $botman = BotManFactory::create($config, new LaravelCache());
+
+        $botman->say('123 Приглашение', $questionnaire->getAttribute('telegram_id'));
 
         return redirect()->route('platform.questionnaire.list');
     }
