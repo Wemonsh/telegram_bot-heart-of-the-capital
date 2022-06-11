@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('redirect', function (\Illuminate\Http\Request $request) {
-    if ($request->type = 1) {
+    if ($request->type == 1) {
         $q = \App\Models\Questionnaire::where('id', $request->id)->first();
 
         if ($q !== null && $q->status === 1) {
@@ -27,7 +27,7 @@ Route::get('redirect', function (\Illuminate\Http\Request $request) {
             return redirect('https://t.me/+wu2etczoVqo1MDNi');
 
         }
-    } elseif($request->type = 2) {
+    } elseif($request->type == 2) {
         $q = \App\Models\Questionnaire::where('id', $request->id)->first();
 
         if ($q !== null && $q->status === 1) {
