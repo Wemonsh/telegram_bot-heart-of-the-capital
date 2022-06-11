@@ -203,7 +203,7 @@ class RegistrationConversation extends Conversation
             } else {
                 $this->askPrivacy();
             }
-        }, ['reply_markup' => json_encode(['remove_keyboard' => true]), 'parse_mode' => 'Markdown']);
+        }, ['reply_markup' => json_encode(['remove_keyboard' => true])]);
     }
 
     public function end() {
