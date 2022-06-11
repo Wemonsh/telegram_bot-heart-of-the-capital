@@ -161,7 +161,7 @@ class RegistrationConversation extends Conversation
             if ($answer->isInteractiveMessageReply()) {
                 if ($answer->getText() == 1) {
 
-                    $this->say('', ['reply_markup' => json_encode(['inline_keyboard' => [
+                    $this->say('Правовая информация:', ['reply_markup' => json_encode(['inline_keyboard' => [
                         [['text' => 'Политика конфиденциальности', 'url' => 'https://www.serdtse.su/privacy'],
                             ['text' => 'Обработка персональных данных', 'url' => 'https://www.serdtse.su/agreement']]
                     ], 'one_time_keyboard' => true, 'resize_keyboard' => true])]);
