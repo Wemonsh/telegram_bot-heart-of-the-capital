@@ -196,7 +196,7 @@ class RegistrationConversation extends Conversation
                     $this->end();
                 } elseif($answer->getText() == 2) {
                     $this->say('Благодарим Вас за интерес к Инициативной Группе. Создание заявки на добавление в закрытый чат Соседи остановлено. Внесённая информация удалена');
-                    $this->askForFullName();
+                    $this->say(__('botman.register.welcome'));
                 } else {
                     $this->askPrivacy();
                 }
