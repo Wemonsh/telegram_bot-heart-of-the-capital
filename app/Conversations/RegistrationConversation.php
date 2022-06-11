@@ -160,6 +160,12 @@ class RegistrationConversation extends Conversation
         $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
                 if ($answer->getText() == 1) {
+
+                    $this->say('тест', ['reply_markup' => json_encode(['inline_keyboard' => [
+                        [['text' => 'Политика конфиденциальности', 'url' => 'https://www.serdtse.su/privacy'],
+                            ['text' => 'Обработка персональных данных', 'url' => 'https://www.serdtse.su/agreement']]
+                    ], 'one_time_keyboard' => true, 'resize_keyboard' => true])]);
+
                     $this->askPrivacy();
                 } elseif($answer->getText() == 2) {
                     $this->askForFullName();
@@ -175,7 +181,7 @@ class RegistrationConversation extends Conversation
     public function askPrivacy()
     {
         $this->bot->typesAndWaits(1);
-        $text = 'Я ознакомлен/ознакомлена с **Политикой конфиденциальности** и согласен/согласна на обработку персональных данных';
+        $text = 'Я ознакомлен/ознакомлена с Политикой конфиденциальности и согласен/согласна на обработку персональных данных';
         $questionPrivacy = Question::create($text)
             ->fallback('Unable to create a new database')
             ->callbackId('confirm_form')
@@ -189,7 +195,7 @@ class RegistrationConversation extends Conversation
                 if ($answer->getText() == 1) {
                     $this->end();
                 } elseif($answer->getText() == 2) {
-                    $this->say('лагодарим Вас за интерес к Инициативной Группе. Создание заявки на добавление в закрытый чат Соседи остановлено. Внесённая информация удалена');
+                    $this->say('Благодарим Вас за интерес к Инициативной Группе. Создание заявки на добавление в закрытый чат Соседи остановлено. Внесённая информация удалена');
                     $this->askForFullName();
                 } else {
                     $this->askPrivacy();
