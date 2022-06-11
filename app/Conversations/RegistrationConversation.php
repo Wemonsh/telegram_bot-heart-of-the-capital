@@ -160,7 +160,7 @@ class RegistrationConversation extends Conversation
         $this->ask($question, function (Answer $answer) {
             if ($answer->isInteractiveMessageReply()) {
                 if ($answer->getText() == 1) {
-                    $this->end();
+                    $this->askPrivacy();
                 } elseif($answer->getText() == 2) {
                     $this->askForFullName();
                 } else {
@@ -170,6 +170,34 @@ class RegistrationConversation extends Conversation
                 $this->askConfirm();
             }
         }, ['reply_markup' => json_encode(['remove_keyboard' => true])]);
+    }
+
+    public function askPrivacy()
+    {
+        $this->bot->typesAndWaits(1);
+        $text = 'Я ознакомлен/ознакомлена с **Политикой конфиденциальности** и согласен/согласна на обработку персональных данных';
+        $questionPrivacy = Question::create($text)
+            ->fallback('Unable to create a new database')
+            ->callbackId('confirm_form')
+            ->addButtons([
+                Button::create('Подтверждаю')->value('1'),
+                Button::create('Не подтверждаю')->value('2'),
+            ]);
+
+        $this->ask($questionPrivacy, function (Answer $answer) {
+            if ($answer->isInteractiveMessageReply()) {
+                if ($answer->getText() == 1) {
+                    $this->end();
+                } elseif($answer->getText() == 2) {
+                    $this->say('лагодарим Вас за интерес к Инициативной Группе. Создание заявки на добавление в закрытый чат Соседи остановлено. Внесённая информация удалена');
+                    $this->askForFullName();
+                } else {
+                    $this->askPrivacy();
+                }
+            } else {
+                $this->askPrivacy();
+            }
+        }, ['reply_markup' => json_encode(['remove_keyboard' => true]), 'parse_mode' => 'Markdown']);
     }
 
     public function end() {

@@ -4,6 +4,7 @@ namespace App\Orchid\Screens;
 
 use App\Models\Questionnaire;
 use App\Orchid\Layouts\QuestionnaireListLayout;
+use App\Orchid\Layouts\QuestionnaireSelection;
 use Orchid\Screen\Screen;
 
 class QuestionnaireListScreen extends Screen
@@ -16,7 +17,7 @@ class QuestionnaireListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'questionnaires' => Questionnaire::paginate()
+            'questionnaires' => Questionnaire::filtersApplySelection(QuestionnaireSelection::class)->paginate()
         ];
     }
 
@@ -48,6 +49,7 @@ class QuestionnaireListScreen extends Screen
     public function layout(): iterable
     {
         return [
+            QuestionnaireSelection::class,
             QuestionnaireListLayout::class
         ];
     }
