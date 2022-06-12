@@ -5,7 +5,9 @@ namespace App\Orchid\Filters;
 use Illuminate\Database\Eloquent\Builder;
 use Orchid\Filters\Filter;
 use Orchid\Screen\Field;
-use Orchid\Screen\Fields\DateTimer;
+use Orchid\Screen\Fields\DateRange;
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Select;
 
 class CreatedAtFilter extends Filter
 {
@@ -16,7 +18,7 @@ class CreatedAtFilter extends Filter
      */
     public function name(): string
     {
-        return 'Created At';
+        return 'filter';
     }
 
     /**
@@ -26,7 +28,7 @@ class CreatedAtFilter extends Filter
      */
     public function parameters(): ?array
     {
-        return ['created_at'];
+        return ['full_name', 'created_at_period', 'status'];
     }
 
     /**
@@ -38,7 +40,22 @@ class CreatedAtFilter extends Filter
      */
     public function run(Builder $builder): Builder
     {
-        return $builder->where('created_at', $this->request->get('created_at'));
+
+        if ($this->request->has('created_at_period'))
+        {
+            $builder->whereBetween('created_at', [$this->request->get('created_at_period')['start'],
+                $this->request->get('created_at_period')['end']]);
+        }
+
+        if ($this->request->has('full_name')) {
+            $builder->where('full_name', 'LIKE', '%'.$this->request->get('full_name').'%');
+        }
+
+        if ($this->request->has('status')) {
+            $builder->where('status', '=', $this->request->get('status'));
+        }
+
+        return $builder;
     }
 
     /**
@@ -49,8 +66,18 @@ class CreatedAtFilter extends Filter
     public function display(): iterable
     {
         return [
-            DateTimer::make('created_at')
-                ->value($this->request->get('created_at'))
+            Input::make('full_name')
+                ->title('ФИО')
+                ->name('full_name'),
+            DateRange::make('created_at_period')
+                ->title('Период создания заявки'),
+            Select::make('status')
+                ->title('Статус')
+                ->options([
+                    '0'   => 'Заявка создана',
+                    '1' => 'Отправлено приглашение',
+                    '2' => 'Приглашен',
+                ])
         ];
     }
 }

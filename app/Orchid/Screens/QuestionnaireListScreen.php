@@ -17,7 +17,7 @@ class QuestionnaireListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'questionnaires' => Questionnaire::filtersApplySelection(QuestionnaireSelection::class)->paginate()
+            'questionnaires' => Questionnaire::filtersApplySelection(QuestionnaireSelection::class)->defaultSort('id')->paginate()
         ];
     }
 

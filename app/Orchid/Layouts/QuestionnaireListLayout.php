@@ -5,6 +5,7 @@ namespace App\Orchid\Layouts;
 use App\Models\Questionnaire;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Group;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -28,19 +29,35 @@ class QuestionnaireListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('id', '#'),
+            TD::make('id', '#')->sort(),
             TD::make('full_name', 'ФИО')
+                ->filter(Input::make())
                 ->render(function (Questionnaire $questionnaire) {
                     return Link::make($questionnaire->full_name)
                         ->route('platform.questionnaire.show', $questionnaire);
+                }),
+            TD::make('status', 'Статус')
+                ->render(function (Questionnaire $questionnaire) {
+                    switch ($questionnaire->status) {
+                        case 0:
+                            return 'Заявка создана';
+                            break;
+                        case 1:
+                            return 'Отправлено приглашение';
+                            break;
+                        case 2:
+                            return 'Приглашен';
+                            break;
+                    }
+                    return 'Ошибка';
                 }),
             TD::make('email', 'Email'),
             TD::make('mobile_phone', 'Телефон'),
             TD::make('campus', 'Корпус'),
             TD::make('apartment', 'Квартира'),
             TD::make('parking', 'Парковочное место'),
-            TD::make('created_at', 'Дата создания'),
-            TD::make('updated_at', 'Дата изменения'),
+            TD::make('created_at', 'Дата создания')->sort(),
+            TD::make('updated_at', 'Дата изменения')->sort(),
         ];
     }
 }
