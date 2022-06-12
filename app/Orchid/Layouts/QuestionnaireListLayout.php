@@ -29,9 +29,8 @@ class QuestionnaireListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('id', '#')->sort(),
+            TD::make('id', '#'),
             TD::make('full_name', 'ФИО')
-                ->filter(Input::make())
                 ->render(function (Questionnaire $questionnaire) {
                     return Link::make($questionnaire->full_name)
                         ->route('platform.questionnaire.show', $questionnaire);
@@ -56,8 +55,8 @@ class QuestionnaireListLayout extends Table
             TD::make('campus', 'Корпус'),
             TD::make('apartment', 'Квартира'),
             TD::make('parking', 'Парковочное место'),
-            TD::make('created_at', 'Дата создания')->sort(),
-            TD::make('updated_at', 'Дата изменения')->sort(),
+            TD::make('created_at', 'Дата создания'),
+            TD::make('updated_at', 'Дата изменения'),
         ];
     }
 }
