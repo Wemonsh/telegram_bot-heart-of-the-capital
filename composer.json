@@ -13,7 +13,8 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "orchid/platform": "*"
+        "orchid/platform": "*",
+        "ext-fileinfo": "*"
     },
     "require-dev": {
         "deployer/deployer": "^7.0@RC",
